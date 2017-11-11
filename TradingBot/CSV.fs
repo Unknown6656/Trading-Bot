@@ -6,17 +6,24 @@ open System.Reflection
 open Microsoft.FSharp.Reflection
 
 
-type ColumnAttribute(index:int option,name:string option) =     
+type ColumnAttribute (index : int option, name : string option) =     
     inherit Attribute()     
+
     let mutable index = index
     let mutable name = name
     new () = ColumnAttribute (None, None)
-    member x.Index          
-        with get() = match index with | Some i -> i | None -> -1
+
+    member __.Index          
+        with get() = match index with
+                     | Some i -> i
+                     | None -> -1
         and set value = index <- Some value         
-    member x.Name          
-        with get() = match name with | Some n -> n | None -> ""
+    member __.Name          
+        with get() = match name with
+                     | Some n -> n
+                     | None -> ""
         and set value = name <- Some value     
+
 
 type CsvReader<'a>(typeConverter:Type -> (string -> obj)) = 
     let mutable header = Map.empty
@@ -24,18 +31,21 @@ type CsvReader<'a>(typeConverter:Type -> (string -> obj)) =
     let fields = FSharpType.GetRecordFields(recordType)
     let objectBuilder = FSharpValue.PreComputeRecordConstructor(recordType)
     let split (delim:char) (line:string) = 
-       line.Split([|delim|]) |> Array.map( fun s -> s.Trim())
+       [| delim |]
+       |> line.Split
+       |> Array.map (fun s -> s.Trim())
 
-    member x.CreateRecord(header:Map<string,int>, delim, line) = 
+    member __.CreateRecord(header:Map<string,int>, delim, line) = 
         let lookupFromHeader (column:ColumnAttribute) = 
             match column.Name with
             | name when name <> String.Empty ->
                 try
                     Some header.[name]
-                with e -> failwithf "no"  
+                with _ -> failwithf "no"
             | _ -> None
              
-        let schema = fields |> Array.mapi( fun fieldIndex field -> 
+        let schema = fields
+                     |> Array.mapi (fun fieldIndex field -> 
             let propertyInfo = recordType.GetProperty(field.Name)
             let deserializeColumnData = typeConverter field.PropertyType
             let columnIndex = 
@@ -69,16 +79,15 @@ type CsvReader<'a>(typeConverter:Type -> (string -> obj)) =
     
     member x.ReadFile(file, separator:char, firstLineHasHeader:bool) = 
         seq { 
-            use textReader = File.OpenText(file)
-            if firstLineHasHeader then
-                header <-
-                    textReader.ReadLine() 
-                    |> split separator
-                    |> Array.filter (fun name -> not (String.IsNullOrWhiteSpace name))
-                    |> Array.mapi (fun i name -> (name, i))
-                    |> Map.ofArray
-            while not textReader.EndOfStream do
-                let line = textReader.ReadLine()
-                if not (String.IsNullOrEmpty line) then
-                    yield x.CreateRecord(header, separator, line)
-        }
+                use textReader = File.OpenText(file)
+                if firstLineHasHeader then
+                    header <- textReader.ReadLine() 
+                              |> split separator
+                              |> Array.filter (fun name -> not (String.IsNullOrWhiteSpace name))
+                              |> Array.mapi (fun i name -> (name, i))
+                              |> Map.ofArray
+                while not textReader.EndOfStream do
+                    let line = textReader.ReadLine()
+                    if not (String.IsNullOrEmpty line) then
+                        yield x.CreateRecord(header, separator, line)
+            }
