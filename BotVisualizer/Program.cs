@@ -1,17 +1,18 @@
-﻿//#define USE_CSV
+﻿#define USE_CSV
 
-using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Microsoft.FSharp.Core;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
-using System.Drawing;
 using System.Diagnostics;
+using System.Management;
+using System.Drawing;
+using System.Linq;
+using System.IO;
+using System;
+
+using Microsoft.FSharp.Core;
 
 using static TradingBot.Simulator;
 using static TradingBot.Bot;
@@ -19,8 +20,6 @@ using static System.Math;
 
 namespace BotVisualizer
 {
-    using System.Management;
-    using System.Text.RegularExpressions;
     using static Program;
 
 
@@ -46,7 +45,7 @@ namespace BotVisualizer
         internal const bool PAUSE = false;
         internal const string SRC = "data/nasdaq-2017.csv";
         internal const string TARGET = "bot.png";
-        internal const double BUDGET = 21;
+        internal const double BUDGET = 1000;
         internal const ulong LOOKBACK = 5;
         internal const double RISK = .1;
         private static Func<double, double> __fptr;
@@ -118,9 +117,7 @@ namespace BotVisualizer
             PlotData dat_shbd = new PlotData("Bot budget (shares only)", CLR_BUDGET_SHARES, result.Select(x => x.state.AssetCount * x.state.Rate()));
             PlotData dat_drbd = new PlotData("Bot budget (direct only)", CLR_BUDGET_DIRECT, result.Select(x => x.state.Budget));
             PlotData[] datasets = new[] { dat_rate, dat_budg, dat_shbd, dat_drbd, dat_volm, /*dat_asst*/ };
-
-            dat_budg.conv = dat_rate.conv;
-
+            
             dat_rate.lst = dat_rate.dataset[dat_rate.dataset.Length - 2];
             
             PointF conv(double x, double y) => new PointF((float)(Min(Max(0, x), 1) * count * FAC_WIDTH + BORDER), (float)(BORDER + (1 - Min(Max(0, y), 1)) * (HEIGHT - 2 * BORDER)));
@@ -374,7 +371,7 @@ source> {source}
             float hfac = (HEIGHT - 2f * BORDER) / count;
             float voffs = BORDER;
             float mwdh = 0;
-            int w = (int)Log10(Max(Abs(max), Abs(min))) + (intsc ? 1 : 4);
+            int w = (int)Log10(Max(Abs(max), Max(Abs(min), 1))) + (intsc ? 1 : 4);
 
             for (int i = 0; i <= count; ++i)
             {
