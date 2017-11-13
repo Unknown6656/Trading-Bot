@@ -86,9 +86,19 @@
 		\texttt{next} &\ : \mathbb{S}_i \longmapsto
 		\begin{cases}
 			\mathbb{S}_{i-1} & \text{if } i < l + a \ \vee \ \left( f(i) > f(i-1) \ \wedge \ M_i(l) \leq r \right) \\
-			\texttt{sell}(1,\ \mathbb{S}_i) & \text{if } i = b \\
-			\\
-			// todo
+			\texttt{sell}(1,\ \mathbb{S}_{i-1}) & \text{if } i = b \\
+			\texttt{sell}(1,\ \mathbb{S}_{i-1}) & \text{if } f(i) < f(i-1) \ \vee \ b_\text{risk} \\
+			\mathbb{S}_{i-1} & \text{if } f(i) < f(i-1) \ \vee \ \neg b_\text{risk} \\
+			\texttt{buy}(1,\ \mathbb{S}_{i-1}) & \text{if } f(i) = f(i-1) \geq f(i-2) \ \vee \ b_\text{risk} \\
+			\texttt{buy}(r,\ \mathbb{S}_{i-1}) & \text{if } f(i) = f(i-1) \geq f(i-2) \ \vee \ \neg b_\text{risk} \\
+			\texttt{buy}(1,\ \mathbb{S}_{i-1}) & \text{if } f(i) > f(i-1) \ \vee \ f(i) >= f(i-2) \\
+			\texttt{buy}(r,\ \mathbb{S}_{i-1}) & \text{if } f(i) > f(i-1) \ \vee \ f(i) < f(i-2) \\
+			\texttt{sell}(1 - r,\ \mathbb{S}_{i-1}) & \text{if } f(i) > f(\state{i-1}{b}) + \frac{\partial f(x)}{\partial x}(i) \\
+			\texttt{sell}(1,\ \mathbb{S}_{i-1}) & \text{otherwise}
 		\end{cases}
+		\\
+		\text{with } b_\text{risk} &\ := r < M_L(i,\ 1) \ \ \in \mathbb{B} \\
+		\text{and } M_L &\ : \mathbb{N}_0 \times \mathbb{N}_0 \rightarrow [0..1] : i,\ o \longmapsto \frac{M_D(i,\ o)}{2 l} \\
+		\text{and } M_D &\ : \mathbb{N}_0 \times \mathbb{N}_0 \rightarrow [0..1] : i,\ o \longmapsto \left| \left\{ x \in \left[ i - l \ ..\ i \right] \ : \ \frac{\partial f(t)}{\partial t}(x - o) \leq 0 \right\} \right|
 	\end{align}
 \end{document}
