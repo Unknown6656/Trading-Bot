@@ -1,11 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29512.175
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TradingBot", "TradingBot\TradingBot.fsproj", "{2068168C-3A3A-4539-B1A2-C0B6D47FA4F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotVisualizer", "BotVisualizer\BotVisualizer.csproj", "{BB1485B8-33AD-4106-BDBE-8FCD2CB712BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_v1", "_v1", "{4FE2DE3F-CAC6-4EFE-B0C6-6933D0D26153}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_v2", "_v2", "{2DCF69E9-F4BA-4E24-A1CC-006CEF263258}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingBot", "_v2\TradingBot\TradingBot.csproj", "{55F586BA-9B46-4ABE-A0AF-387678A786FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{1914D735-2EF7-4172-893B-44464B8CC438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visualizer", "common\Visualizer\Visualizer.csproj", "{2C460E26-50BF-4CF8-BA4B-924D677EDD08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_v3", "_v3", "{1C9BFECE-AB09-4B46-8637-96131B74D258}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor", "Predictor\Predictor.csproj", "{857A79D1-A856-420B-9EF6-4D201DCC3652}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +35,28 @@ Global
 		{BB1485B8-33AD-4106-BDBE-8FCD2CB712BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB1485B8-33AD-4106-BDBE-8FCD2CB712BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB1485B8-33AD-4106-BDBE-8FCD2CB712BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55F586BA-9B46-4ABE-A0AF-387678A786FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55F586BA-9B46-4ABE-A0AF-387678A786FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55F586BA-9B46-4ABE-A0AF-387678A786FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55F586BA-9B46-4ABE-A0AF-387678A786FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C460E26-50BF-4CF8-BA4B-924D677EDD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C460E26-50BF-4CF8-BA4B-924D677EDD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C460E26-50BF-4CF8-BA4B-924D677EDD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C460E26-50BF-4CF8-BA4B-924D677EDD08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{857A79D1-A856-420B-9EF6-4D201DCC3652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{857A79D1-A856-420B-9EF6-4D201DCC3652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{857A79D1-A856-420B-9EF6-4D201DCC3652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{857A79D1-A856-420B-9EF6-4D201DCC3652}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2068168C-3A3A-4539-B1A2-C0B6D47FA4F2} = {4FE2DE3F-CAC6-4EFE-B0C6-6933D0D26153}
+		{BB1485B8-33AD-4106-BDBE-8FCD2CB712BE} = {4FE2DE3F-CAC6-4EFE-B0C6-6933D0D26153}
+		{55F586BA-9B46-4ABE-A0AF-387678A786FA} = {2DCF69E9-F4BA-4E24-A1CC-006CEF263258}
+		{2C460E26-50BF-4CF8-BA4B-924D677EDD08} = {1914D735-2EF7-4172-893B-44464B8CC438}
+		{857A79D1-A856-420B-9EF6-4D201DCC3652} = {1C9BFECE-AB09-4B46-8637-96131B74D258}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6601DAB8-6733-4449-B0FB-FD872F0E0A1B}
